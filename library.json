@@ -1,0 +1,23 @@
+{
+  "name": "Cloudchip",
+  "keywords": "update, setControl, sendtoServer, getControl, setStream, getStream",
+  "description": "An elegant and efficient Cloudchip library for interfacing with Cloudchip-IOT",
+  "homepage": "http://iot.cloudchip.in",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/t-in/cloudchip-iot.git"
+  },
+  "version": "1.0.0",
+  "authors": {
+    "name": "Narsimulu Cinasi",
+    "url": "https://www.linkedin.com/in/narsimmudiraj/"
+  },
+  "exclude": [
+    "fuzzing",
+    "scripts",
+    "test",
+    "third-party"
+  ],
+  "frameworks": "arduino",
+  "platforms": "*"
+}
