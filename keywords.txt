@@ -12,10 +12,12 @@ Cloudchip	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 init	KEYWORD2
-getStream	KEYWORD2
-sendtoServer	KEYWORD2
-setControl	KEYWORD2
-getControl	KEYWORD2
+deviceConfig	KEYWORD2
+readStream	KEYWORD2
+writeStream	KEYWORD2
+readControl	KEYWORD2
+writeControl	KEYWORD2
+WiFiConfig	KEYWORD2
 update	KEYWORD2
 ######################################
 # Constants (LITERAL1)
