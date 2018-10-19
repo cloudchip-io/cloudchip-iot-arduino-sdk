@@ -9,7 +9,7 @@
 This library works with the ESP32
   ---->https://dl.espressif.com/dl/package_esp32_index.json
  
-
+For manual installation steps: https://www.arduino.cc/en/Guide/Libraries 
 MIT license, all text above must be included in any redistribution
 
 To download. click the DOWNLOADS button in the top right corner, rename the uncompressed folder Cloudchip. Check that the Cloudchip folder contains Clouchip.cpp and Cloudchip.h
