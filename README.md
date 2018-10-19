@@ -1,7 +1,7 @@
 # Cloudchip IoT Arduino Libraries
 
 * Cloudchip website : http://iot.cloudchip.in
-* Written by Narsimulu Cinasi for Cloudchip Technologies Pvt. Ltd.
+* Written by Narsimulu Cinasi for Cloudchip IoT Platform
 * This is a library for the Cloudchip-IoT Platform
 
 **Note:**
