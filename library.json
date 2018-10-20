@@ -19,6 +19,7 @@
     "third-party"
 	"docs"
 	"extras"
+	"misc"
   ],
   "frameworks": "arduino",
   "platforms": "*"
