@@ -1,0 +1,12 @@
+{
+    "name": "Cloudchip",
+    "keywords": "mqtt, m2m, iot, Cloudchip",
+    "description": "A library for connecting to the Cloudchip IoT platform. Thin wrapper on PubSubClient",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cloudchip-tech/ciot-iot-lib.git"
+    },
+    "version": "0.1",
+    "examples": "examples/*/*.ino",
+    "frameworks": "arduino"
+}

@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Cloudchip	KEYWORD1
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+WiFiInit	KEYWORD2
+Credentials	KEYWORD2
+deviceTelemetry	KEYWORD2
+reconnect	KEYWORD2
+run	KEYWORD2
+widgetValue	KEYWORD2
+deviceAttributes	KEYWORD2
+serverAttributes	KEYWORD2
+getWidget	KEYWORD2
+Terminal	KEYWORD2
+Publish	KEYWORD2
+sendToWidget	KEYWORD2
+debugTerminal	KEYWORD2
+######################################
+# Constants (LITERAL1)
+#######################################
+#KEY_NONE	LITERAL1
