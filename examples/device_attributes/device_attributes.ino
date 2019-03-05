@@ -17,7 +17,7 @@ void setup()
 void loop()
 {
   cloudchip.run();
-  cloudchip.deviceAttributes("Device Id","123456789");
+  cloudchip.deviceAttributes("Device Id",1234);
   delay(3000);
 }
 
