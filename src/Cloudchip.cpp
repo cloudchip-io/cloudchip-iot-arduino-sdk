@@ -14,48 +14,112 @@ String json1= "";
 String methodName;
 String widget_message;
 
+static Ticker task1;
+static WiFiMulti wifiMulti;
+static unsigned int msg_count = 1;
+
+
 void Cloudchip::Credentials(char tok[])
 {
 	strcpy(token,tok);
 	client.setServer(server, 1883);
 	client.setCallback(Cloudchip::on_message);
 }
-void Cloudchip::WiFiInit(const char *ssid,const char *password)
-{
-	
-  if (strcmp(WiFi.SSID().c_str(), ssid) != 0)
-  {
-    WiFi.begin(ssid, password);
+int Cloudchip::getRSSIasQuality(int RSSI) {
+  int quality = 0;
+
+  if (RSSI <= -100) {
+    quality = 0;
+  } else if (RSSI >= -50) {
+    quality = 100;
+  } else {
+    quality = 2 * (RSSI + 100);
   }
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-  }
-  Serial.println("Connected to WIFI");
+  return quality;
 }
-bool Cloudchip::Publish(String data,int att) 
+
+bool Cloudchip::WiFiInit(const char *wifi_ssid,const char *wifi_password)
+{
+
+	ssid = wifi_ssid;
+	password = wifi_password;
+	
+	  if (strcmp(WiFi.SSID().c_str(), ssid) != 0)
+	  {
+		WiFi.begin(ssid, password);
+	  }
+	  while (WiFi.status() != WL_CONNECTED)
+	  {
+		delay(500);
+	  }
+	  
+  return 1;
+}
+
+bool Cloudchip::WiFiMode(unsigned char mode){
+	
+	
+	int count = 0, n=0;
+	
+	while(count < 10){
+		
+		if(mode == 0)
+		{
+			/* Mode 0 Connects the open wifi*/
+			
+			WiFi.mode(WIFI_STA);
+			WiFi.disconnect();
+			n = WiFi.scanNetworks();
+			for (int i = 0; i < n; ++i) {
+				
+				ssid = WiFi.SSID(i).c_str();
+				password = "";
+				if(WiFi.encryptionType(i) == WIFI_AUTH_OPEN) wifiMulti.addAP(ssid, password);
+			}
+			if(wifiMulti.run() == WL_CONNECTED) return 1;
+		}
+		else if(mode == 1)
+		{
+			WiFi.begin(ssid,password);
+			if(WiFi.status() == WL_CONNECTED) return 1;	
+		} 
+		else if(mode == 2)
+		{
+			wifiMulti.addAP(ssid, password);
+			if(wifiMulti.run() == WL_CONNECTED) return 1;
+		}
+		
+		
+		delay(500);
+		count++;
+	}
+	return 0;
+	
+}
+
+
+
+
+
+bool Cloudchip::Publish(String data,int mode) 
 {	
+
+	char buffer[100];
+	data.toCharArray(buffer, 100);
+	
   if (!client.connected())
   {
-    while (!client.connect("ESP8266 Device", token, NULL))
+    while (!client.connect("Cloudchip Device", token, NULL))
     {
       delay(100);
     }
   }
-  if(att==1)
-  {
-	String payload = data;
-	char   attributes[100];
-	payload.toCharArray(attributes, 100);
-	client.publish("v1/devices/me/telemetry", attributes);
-  }
-  if(att==2)
-  {
-	String payload = data;
-	char   attributes[100];
-	payload.toCharArray(attributes, 100);
-	client.publish("v1/devices/me/attributes", attributes);
-  }
+  
+  if(mode==1) client.publish("v1/devices/me/telemetry", buffer); 			// Telemetry
+  else if(mode==2) client.publish("v1/devices/me/attributes", buffer); 		// Attribute
+  else if(mode == 3) client.publish("v1/devices/me/rpc/response/+", buffer); // Widget
+  
+  return 1;
   
 }
 int Cloudchip::deviceTelemetry(String parameter, int value)
@@ -114,7 +178,7 @@ void Cloudchip::reconnect() {
   while (!client.connected()) 
   {
     // Attempt to connect (clientId, username, password)
-    if (client.connect("ESP8266 Device", token, NULL)) 
+    if (client.connect("Device", token, NULL)) 
     {
       Serial.println( "[DONE]" );
       // Subscribing to receive RPC requests
@@ -174,16 +238,12 @@ void Cloudchip::on_message(const char* topic, byte* payload, unsigned int length
 			bc = conv;
 			
 		}
-/*void Cloudchip::sendToWidget(topic, String method,int val)
+void Cloudchip::updateWidget(String topic, String method,int val)
 {
-	update = method;
-	updateval = val;
-}*/	
+	String data = String(msg_count, DEC)+topic + method + String(val, DEC);
+	Cloudchip::Publish(data,3);
+}
 
-/*int Cloudchip::widgetValue()
-{
-	return bc;
-}*/
 String Cloudchip::getWidget()
 {
 	return json1;

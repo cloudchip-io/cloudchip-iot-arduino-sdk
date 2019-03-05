@@ -14,6 +14,7 @@
 #include <DNSServer.h>
 #include <memory>
 #include <Ticker.h>
+#include <WiFiMulti.h>
 
 #if defined(ESP8266)
 extern "C" {
@@ -25,8 +26,6 @@ extern "C" {
 #define ESP_getChipId()   ((uint32_t)ESP.getEfuseMac())
 #endif
 
-
-
-#define LED_ONBOARD 2
+//typedef unsigned int u32;
 
 #endif

@@ -1,9 +1,13 @@
 #include <Cloudchip.h>
+
 #define SSID             "SSID" //WIFI Username
-#define PASSWORD         "Passowrd" //WIFi Password
+#define PASSWORD         "Password" //WIFi Password
 #define TOKEN            "Access Token" //Access Token
+
 Cloudchip cloudchip;
-int i = 40;
+
+int val;
+
 void setup()
 {
   Serial.begin(115200);
@@ -13,8 +17,8 @@ void setup()
 void loop()
 {
   cloudchip.run();
-  i++;
-   cloudchip.deviceTelemetry("KEY",i);
-   delay(2000);
+  cloudchip.deviceTelemetry("Sensor 1",val++);
+  
+  delay(5000); //uploads data every 5sec
 }
 
