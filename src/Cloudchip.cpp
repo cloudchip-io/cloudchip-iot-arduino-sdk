@@ -28,7 +28,7 @@ void Cloudchip::Credentials(char tok[])
 {
 	strcpy(token,tok);
 	client.setServer(server, 1883);
-	client.setCallback(Cloudchip::on_message1);
+	client.setCallback(Cloudchip::on_message);
 }
 int Cloudchip::getRSSIasQuality(int RSSI) {
   int quality = 0;
@@ -292,56 +292,6 @@ String Cloudchip::debugTerminal()
 		}
 }	
 
-//***************************************************************************************************************************************
-
-void Cloudchip::run_attributes() 
-{
-	Cloudchip::reconnect_attributes();
-	client.loop();
-}
-
-String Cloudchip::getAttributeValue(String attributes) 
-{  
-	Attribute    =  attributes;
-    return Attribute_value;
-}
-
-String Cloudchip::Attribute_publishdata()
-{
-  StaticJsonBuffer<200> jsonBuffer;
-  JsonObject& data = jsonBuffer.createObject();
-  data["clientKeys"] = Attribute;
-  char payload[256];
-  data.printTo(payload, sizeof(payload));
-  String strPayload = String(payload);
-  return strPayload;
-}
-
-void Cloudchip::reconnect_attributes()
-{ 
-    if ( client.connect(" ", token, NULL) ) 
-	{
-      client.subscribe("v1/devices/me/attributes/response/+");
-      client.publish("v1/devices/me/attributes/request/1",Attribute_publishdata().c_str());
-    } 
-	else 
-	{
-      Serial.print( "There is a issue in connecting to the device re-check detials provided");
-      delay( 5000 );
-    }
-}
-
-void Cloudchip::on_message1(const char* topic, byte* payload, unsigned int length)
- {
-  char json[length + 1];
-  strncpy (json, (char*)payload, length);
-  json[length] = '\0';
-  StaticJsonBuffer<200> jsonBuffer;
-  JsonObject& data = jsonBuffer.parseObject((char*)json);
-  if (!data.success()) {Serial.println("parseObject() failed");return;}
-  String value_cloud = json;
-  Attribute_value=value_cloud;
-}
 
 
 
