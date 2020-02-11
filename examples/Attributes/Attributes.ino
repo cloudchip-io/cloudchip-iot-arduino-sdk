@@ -1,5 +1,3 @@
-
-
 #include <Cloudchip.h>
 
 #define SSID             "SSID" //WIFI Username
@@ -19,6 +17,7 @@ void loop()
   cloudchip.run();
   cloudchip.deviceAttributes("Device Id",1234);
   delay(3000);
+ 
 }
 
 
