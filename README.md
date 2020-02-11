@@ -3,7 +3,7 @@
 * Modified to work with ESP32 - based on https://github.com/cloudchip-tech/cloudchip_iot_platform_lib*
 * Cloudchip website : http://iot.cloudchip.in
 * Written by Cloudchip Team
-* This is a library for the Cloudchip IoT Platform V2
+* This is a library for the Cloudchip IoT Platform V(2.0.2)
 
 **Note:**
 
