@@ -25,8 +25,8 @@ class Cloudchip
 		void updateWidget(String topic, String method,int val);
 		String getWidget();
 		String getWidget(String method);
-		String Terminal();
-		String debugTerminal();		
+		//String Terminal();
+		//String debugTerminal();		
 		String getAttributeValue(String attributes);
 		
 	private:

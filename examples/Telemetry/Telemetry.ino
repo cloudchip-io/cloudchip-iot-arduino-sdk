@@ -17,8 +17,7 @@ void setup()
 void loop()
 {
   cloudchip.run();
-  cloudchip.deviceTelemetry("Sensor 1",val++);
-  
-  delay(5000); //uploads data every 5sec
+  cloudchip.deviceTelemetry("Sensor 1", random(1,100));
+  delay(5000); //uploads data every 5 sec
 }
 

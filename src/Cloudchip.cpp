@@ -10,8 +10,7 @@ String debug_terminal = "delay";
 String debug_value;
 String widget;
 String widget1;
-String json1= "";
-String methodName;
+String widget_data_json= "";
 String Attribute="";
 static Ticker task1;
 String Attribute_value = "";
@@ -127,7 +126,7 @@ bool Cloudchip::Publish(String data,int mode)
   if(mode==1) client.publish("v1/devices/me/telemetry", buffer); 			// Telemetry
   else if(mode==2) client.publish("v1/devices/me/attributes", buffer); 		// Attribute
   else if(mode == 3) client.publish("v1/devices/me/rpc/response/+", buffer); // Widget
-  
+  else return 0;
   return 1;
   
 }
@@ -171,7 +170,7 @@ int Cloudchip::deviceTelemetry(String parameter, String value)
   root.printTo(data);
   Cloudchip::Publish(data,1);
 }
-double Cloudchip::deviceTelemetry(String parameter, double value)
+double Cloudchip::deviceTelemetry(  String parameter, double value)
 {
   String data;
   const size_t bufferSize = JSON_OBJECT_SIZE(1);
@@ -189,7 +188,7 @@ void Cloudchip::reconnect() {
     // Attempt to connect (clientId, username, password)
     if (client.connect("Device", token, NULL)) 
     {
-      Serial.println( "[DONE]" );
+      Serial.println( "[Wifi Connected]" );
       // Subscribing to receive RPC requests
       client.subscribe("v1/devices/me/rpc/request/+");
     }
@@ -215,14 +214,30 @@ void Cloudchip::on_message(const char* topic, byte* payload, unsigned int length
 			char json[length + 1];
 			strncpy (json, (char*)payload, length);
 			json[length] = '\0';
-			json1 = (String)json;
-			StaticJsonBuffer<200> jsonBuffer;
-			JsonObject& data = jsonBuffer.parseObject((char*)json); 
+			widget_data_json = (String)json;	
+		}
+
+
+void Cloudchip::updateWidget(String topic, String method,int val)
+{
+	String data = String(msg_count, DEC)+topic + method + String(val, DEC);
+	Cloudchip::Publish(data,3);
+}
+
+String Cloudchip::getWidget()
+{
+	return widget_data_json;
+}
+String Cloudchip::getWidget(String method)
+{
+		String no_value = "0";
+		StaticJsonBuffer<200> jsonBuffer;
+			JsonObject& data = jsonBuffer.parseObject(widget_data_json); 
 			if (!data.success())
 			{
 				Serial.println("parseObject() failed");
 			}
-			methodName = String((const char*)data["method"]);
+			String methodName = String((const char*)data["method"]);
 			String val = String((const char*)data["params"]);
 			String val1 = String((const char*)data["params"]["command"]);
 			String con1 ="true";
@@ -241,23 +256,6 @@ void Cloudchip::on_message(const char* topic, byte* payload, unsigned int length
 			}
 			int conv = val.toInt();
 			bc = conv;
-			
-		}
-
-
-void Cloudchip::updateWidget(String topic, String method,int val)
-{
-	String data = String(msg_count, DEC)+topic + method + String(val, DEC);
-	Cloudchip::Publish(data,3);
-}
-
-String Cloudchip::getWidget()
-{
-	return json1;
-}
-String Cloudchip::getWidget(String method)
-{
-		String no_value = "0";
 		if((methodName.equals(method)))
 		{
 			return widget;
@@ -267,7 +265,7 @@ String Cloudchip::getWidget(String method)
 			return no_value;
 		}
 }	
-String Cloudchip::Terminal()
+/*String Cloudchip::Terminal()
 {
 	String no_value = "0";
 		if((methodName.equals(terminal)))
@@ -278,8 +276,8 @@ String Cloudchip::Terminal()
 		{
 			return no_value;
 		}
-}
-String Cloudchip::debugTerminal()
+}*/
+/*String Cloudchip::debugTerminal()
 {
 	String no_value = "0";
 		if((methodName.equals(debug_terminal)))
@@ -290,7 +288,7 @@ String Cloudchip::debugTerminal()
 		{
 			return no_value;
 		}
-}	
+}*/	
 
 
 
