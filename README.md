@@ -1,9 +1,8 @@
 # Cloudchip IoT Arduino Libraries
 
-* Modified to work with ESP32 - based on https://github.com/cloudchip-tech/cloudchip_iot_platform_lib*
-* Cloudchip website : http://cloudchip.io
-* Written by Cloudchip Team
-* This is a library for the Cloudchip IoT Platform V(2.0.2)
+* Modified to work with ESP32 - based on https://github.com/cloudchip-io/cloudchip-iot-arduino-sdk*
+* Website : http://cloudchip.io
+* This is a library for the Cloudchip IoT Platform v2
 
 **Note:**
 
