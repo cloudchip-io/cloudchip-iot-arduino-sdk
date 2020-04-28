@@ -1,6 +1,6 @@
 # Cloudchip.io - Arduino Libraries
 
-* Arduino Library for ESP32/ESP8266 Modules  - based on https://github.com/cloudchip-io/cloudchip-iot-arduino-sdk
+* Arduino Library for ESP32/ESP8266 Modules  - based on https://github.com/cloudchip-io/Cloudchip-IoT-Arduino-SDK
 * Website : www.cloudchip.io
 * This is a library for the Cloudchip IoT Platform v2
 
