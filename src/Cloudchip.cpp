@@ -3,7 +3,7 @@ WiFiClient   wifiClient;
 PubSubClient client(wifiClient);
 int status = WL_IDLE_STATUS;
 char token[30];
-char server[15] ="13.235.106.101";
+
 String terminal= "sendCommand";
 int bc;
 String debug_terminal = "delay";
@@ -26,7 +26,7 @@ static unsigned int msg_count = 1;
 void Cloudchip::Credentials(char tok[])
 {
 	strcpy(token,tok);
-	client.setServer(server, 1883);
+	client.setServer("www.cloudchip.io", 1883);
 	client.setCallback(Cloudchip::on_message);
 }
 int Cloudchip::getRSSIasQuality(int RSSI) {
